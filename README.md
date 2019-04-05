@@ -2,7 +2,7 @@
 
 This is a sample application for the [Integration and Verification Techniques](http://www.mit.bme.hu/oktatas/targyak/vimiac04) course at BME MIT.
 
-This is a modification from branch-A.
+This is a modification from the branch, called branch-B.
 
 The application is simplified and deliberately contains bugs.
 
