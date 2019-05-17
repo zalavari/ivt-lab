@@ -51,4 +51,93 @@ public class GT4500Test {
     verify(secondary, times(1)).fire(1);
   }
 
+  @Test
+  public void fireTorpedo_Single_Primary_Empty_Secondary_Success(){
+    // Arrange
+    when(primary.isEmpty()).thenReturn(true);
+    when(primary.fire(1)).thenReturn(false);
+    when(secondary.fire(1)).thenReturn(true);
+
+    // Act
+    boolean result = ship.fireTorpedo(FiringMode.SINGLE);
+
+    // Assert
+    assertEquals(true, result);
+    //Verifying
+    verify(primary, times(0)).fire(1);
+    verify(secondary, times(1)).fire(1);
+  }
+
+  @Test
+  public void fireTorpedo_Single_Primary_Failure(){
+    // Arrange
+    when(primary.isEmpty()).thenReturn(false);
+    when(primary.fire(1)).thenReturn(false);
+    when(secondary.fire(1)).thenReturn(true);
+
+    // Act
+    boolean result = ship.fireTorpedo(FiringMode.SINGLE);
+
+    // Assert
+    assertEquals(false, result);
+    //Verifying
+    verify(primary, times(1)).fire(1);
+    verify(secondary, times(0)).fire(1);
+  }
+
+  @Test
+  public void fireTorpedo_Single_Stores_Empty(){
+    // Arrange
+    when(primary.isEmpty()).thenReturn(true);
+    when(secondary.isEmpty()).thenReturn(true);
+
+    // Act
+    boolean result = ship.fireTorpedo(FiringMode.SINGLE);
+
+    // Assert
+    assertEquals(false, result);
+    //Verifying
+    verify(primary, times(0)).fire(1);
+    verify(secondary, times(0)).fire(1);
+  }
+
+
+  @Test
+  public void fireTorpedo_All_Primary_Empty_Secondary_Success(){
+    // Arrange
+    when(primary.isEmpty()).thenReturn(true);
+    when(primary.fire(1)).thenReturn(false);
+    when(secondary.fire(1)).thenReturn(true);
+
+    // Act
+    boolean result = ship.fireTorpedo(FiringMode.ALL);
+
+    // Assert
+    assertEquals(true, result);
+    //Verifying
+    verify(primary, times(0)).fire(1);
+    verify(secondary, times(1)).fire(1);
+  }
+
+
+
+  @Test
+  public void fireTorpedo_All_Primary_Failure(){
+    // Arrange
+    when(primary.isEmpty()).thenReturn(false);
+    when(primary.fire(1)).thenReturn(false);
+    when(secondary.fire(1)).thenReturn(true);
+
+    // Act
+    boolean result = ship.fireTorpedo(FiringMode.ALL);
+
+    // Assert
+    assertEquals(true, result);
+    //Verifying
+    verify(primary, times(1)).fire(1);
+    verify(secondary, times(1)).fire(1);
+  }
+
+
+
 }
