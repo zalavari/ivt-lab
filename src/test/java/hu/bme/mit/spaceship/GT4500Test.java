@@ -3,6 +3,8 @@ package hu.bme.mit.spaceship;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.*;
+import org.junit.jupiter.params.provider.*;
 
 import static org.mockito.Mockito.*;
 
@@ -85,14 +87,15 @@ public class GT4500Test {
     verify(secondary, times(0)).fire(1);
   }
 
-  @Test
-  public void fireTorpedo_Single_Stores_Empty(){
+  @ParameterizedTest
+  @EnumSource(FiringMode.class)
+  public void fireTorpedo_Stores_Empty(FiringMode firingMode){
     // Arrange
     when(primary.isEmpty()).thenReturn(true);
     when(secondary.isEmpty()).thenReturn(true);
 
     // Act
-    boolean result = ship.fireTorpedo(FiringMode.SINGLE);
+    boolean result = ship.fireTorpedo(firingMode);
 
     // Assert
     assertEquals(false, result);
@@ -100,23 +103,6 @@ public class GT4500Test {
     verify(primary, times(0)).fire(1);
     verify(secondary, times(0)).fire(1);
   }
-
-  @Test
-  public void fireTorpedo_All_Stores_Empty(){
-    // Arrange
-    when(primary.isEmpty()).thenReturn(true);
-    when(secondary.isEmpty()).thenReturn(true);
-
-    // Act
-    boolean result = ship.fireTorpedo(FiringMode.ALL);
-
-    // Assert
-    assertEquals(false, result);
-    //Verifying
-    verify(primary, times(0)).fire(1);
-    verify(secondary, times(0)).fire(1);
-  }
-
 
   @Test
   public void fireTorpedo_All_Primary_Empty_Secondary_Success(){
@@ -193,13 +179,13 @@ public class GT4500Test {
     verify(secondary, times(0)).fire(1);
   }
 
-  @Test
-  public void fireLaser(){
+  @ParameterizedTest
+  @EnumSource(FiringMode.class)
+  public void fireLaser(FiringMode firingMode){
     // Arrange
 
     // Act
-
-    boolean result = ship.fireLaser(FiringMode.SINGLE);
+    boolean result = ship.fireLaser(firingMode);
 
     // Assert
     assertEquals(false, result);
