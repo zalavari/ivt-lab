@@ -138,6 +138,27 @@ public class GT4500Test {
     verify(secondary, times(1)).fire(1);
   }
 
+  @Test
+  public void fireTorpedo_Single_Alternating_Success(){
+    // Arrange
+    when(primary.isEmpty()).thenReturn(false);
+    when(primary.isEmpty()).thenReturn(false);
+    when(primary.fire(1)).thenReturn(true);
+    when(secondary.fire(1)).thenReturn(true);
+
+    // Act
+    ship.fireTorpedo(FiringMode.SINGLE);
+    ship.fireTorpedo(FiringMode.SINGLE);
+    when(primary.isEmpty()).thenReturn(true);
+    boolean result = ship.fireTorpedo(FiringMode.SINGLE);
+
+    // Assert
+    assertEquals(true, result);
+    //Verifying
+    verify(primary, times(1)).fire(1);
+    verify(secondary, times(2)).fire(1);
+  }
+
 
 
 }
